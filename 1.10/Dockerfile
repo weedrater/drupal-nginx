@@ -31,7 +31,8 @@ RUN addgroup -S -g 82 www-data && \
         zlib-dev \
         geoip-dev\
         luajit \
-        luajit-dev && \
+        luajit-dev \
+        openssl && \
 
     # Download nginx and its modules source code
     wget -qO- http://nginx.org/download/nginx-${NGX_VER}.tar.gz | tar xz -C /tmp/ && \
@@ -91,7 +92,8 @@ RUN addgroup -S -g 82 www-data && \
     chmod -R 777 /var/lib/nginx/tmp && \
     mkdir -p /etc/nginx/pki && \
     chmod 400 /etc/nginx/pki && \
-
+    mkdir -p /etc/nginx/external && \
+    
     # Cleanup
     apk del *-dev build-base autoconf libtool && \
     rm -rf /var/cache/apk/* /tmp/*
@@ -100,6 +102,7 @@ RUN addgroup -S -g 82 www-data && \
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY fastcgi_params /etc/nginx/fastcgi_params
 COPY drupal* /opt/
+ADD ssl.conf /etc/nginx/conf.d/ssl.conf
 
 WORKDIR /var/www/html
 VOLUME /var/www/html
