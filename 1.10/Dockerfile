@@ -102,7 +102,7 @@ RUN addgroup -S -g 82 www-data && \
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY fastcgi_params /etc/nginx/fastcgi_params
 COPY drupal* /opt/
-ADD ssl.conf /etc/nginx/conf.d/ssl.conf
+COPY ssl.conf /etc/nginx/external/ssl.conf
 
 WORKDIR /var/www/html
 VOLUME /var/www/html
@@ -110,4 +110,5 @@ VOLUME /var/www/html
 EXPOSE 80 443
 
 COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 CMD "docker-entrypoint.sh"
