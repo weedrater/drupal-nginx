@@ -36,7 +36,7 @@ fi
 if [ -n "$NGINX_SERVER_NAME" ]; then
     sed -i 's/SERVER_NAME/'"${NGINX_SERVER_NAME}"'/' /etc/nginx/conf.d/*.conf
 fi
-
+if
 # Enable Self Signed Cert
 DH_SIZE="2048"
 
